@@ -1,0 +1,359 @@
+# Theory Assignment – 3: JavaScript
+
+**Deadline:** 22 October 2026
+
+## 1. What is the difference between frontend and backend JavaScript?
+
+**Frontend JavaScript** runs in the user's web browser and makes web pages interactive. It handles tasks such as button clicks, form validation, animations, and DOM manipulation.
+
+**Backend JavaScript** runs on a server, commonly using Node.js. It handles server-side logic, authentication, APIs, and database operations.
+
+| Frontend JavaScript | Backend JavaScript |
+|---|---|
+| Runs in the browser. | Runs on the server. |
+| Manages the user interface and interactions. | Manages data and business logic. |
+| Can manipulate the DOM. | Can access server-side resources and databases. |
+| Example: validating a form. | Example: verifying a login request. |
+
+## 2. What is DOM?
+
+DOM stands for **Document Object Model**. It is a programming interface that represents an HTML document as a tree of objects. JavaScript can use the DOM to access, modify, add, or remove HTML elements and change their styles.
+
+**Example:**
+
+```html
+<p id="demo">Hello</p>
+
+<script>
+    document.getElementById("demo").innerHTML = "Hello World";
+</script>
+```
+
+**Output:** The paragraph displays `Hello World` instead of `Hello`.
+
+## 3. What is an event in JavaScript?
+
+An **event** is an action or occurrence detected by the browser that JavaScript can respond to. Events may be triggered by the user or by the browser.
+
+Common events include:
+
+- `click` — when an element is clicked.
+- `mouseover` — when the pointer moves over an element.
+- `keydown` — when a keyboard key is pressed.
+- `submit` — when a form is submitted.
+- `load` — when a page or resource finishes loading.
+
+**Example:**
+
+```html
+<button onclick="showMessage()">Click Me</button>
+
+<script>
+    function showMessage() {
+        alert("Button clicked!");
+    }
+</script>
+```
+
+When the button is clicked, an alert message appears.
+
+## 4. What is the event loop in JavaScript?
+
+The **event loop** is a mechanism that allows JavaScript to handle asynchronous operations while executing code on a single main thread. It checks whether the call stack is empty and schedules waiting callbacks for execution. Promise callbacks (microtasks) are processed before callbacks in the task queue at the relevant event-loop checkpoint.
+
+**Example:**
+
+```javascript
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Timer");
+}, 0);
+
+console.log("End");
+```
+
+**Output:**
+
+```text
+Start
+End
+Timer
+```
+
+**Explanation:** JavaScript executes the synchronous statements first. The timer callback runs later, even when the delay is zero.
+
+## 5. What is hoisting in JavaScript?
+
+**Hoisting** is JavaScript's behavior of processing declarations before executing code in their scope. The effect depends on the type of declaration.
+
+- `var` declarations are hoisted and initialized with `undefined`.
+- `let` and `const` declarations cannot be accessed before their declaration is reached because they are in the *temporal dead zone*.
+- Function declarations can generally be called before their position in the code.
+
+**Example:**
+
+```javascript
+console.log(a);
+var a = 10;
+```
+
+**Output:**
+
+```text
+undefined
+```
+
+**Explanation:** The declaration of `a` is processed before execution, but its assignment to `10` happens at its original position.
+
+**Function example:**
+
+```javascript
+greet();
+
+function greet() {
+    console.log("Hello");
+}
+```
+
+**Output:**
+
+```text
+Hello
+```
+
+## 6. What is event bubbling?
+
+**Event bubbling** is a process in which an event triggered on a child element propagates upward through its parent elements in the DOM tree.
+
+**Example:**
+
+```html
+<div id="parent">
+    <button id="child">Click Me</button>
+</div>
+
+<script>
+    document.getElementById("parent").addEventListener("click", function() {
+        console.log("Parent clicked");
+    });
+
+    document.getElementById("child").addEventListener("click", function() {
+        console.log("Child clicked");
+    });
+</script>
+```
+
+**Output when the button is clicked:**
+
+```text
+Child clicked
+Parent clicked
+```
+
+**Explanation:** The click event first executes the button's handler and then bubbles up to the parent `div`.
+
+## 7. What is the difference between named, anonymous, and arrow functions?
+
+### Named function
+
+A named function has a name and can be called using that name.
+
+```javascript
+function add(a, b) {
+    return a + b;
+}
+
+console.log(add(2, 3));
+```
+
+**Output:** `5`
+
+### Anonymous function
+
+An anonymous function has no name of its own. It is often assigned to a variable or passed as a callback.
+
+```javascript
+const add = function(a, b) {
+    return a + b;
+};
+
+console.log(add(2, 3));
+```
+
+**Output:** `5`
+
+### Arrow function
+
+An arrow function uses the `=>` syntax. It provides a shorter syntax and inherits `this` from its surrounding scope.
+
+```javascript
+const add = (a, b) => a + b;
+
+console.log(add(2, 3));
+```
+
+**Output:** `5`
+
+| Named function | Anonymous function | Arrow function |
+|---|---|---|
+| Has a function name. | Has no function name of its own. | Uses `=>` syntax. |
+| Can be called by its name. | Often stored in a variable or used as a callback. | Often used for concise callbacks. |
+| Has its own `this` depending on how it is called. | Has its own `this` depending on how it is called. | Does not have its own `this`. |
+
+## 8. Explain `for...of` and `for...in` loops.
+
+### `for...of` loop
+
+The `for...of` loop iterates over the **values** of an iterable, such as an array or string.
+
+```javascript
+let arr = [10, 20, 30];
+
+for (let value of arr) {
+    console.log(value);
+}
+```
+
+**Output:**
+
+```text
+10
+20
+30
+```
+
+### `for...in` loop
+
+The `for...in` loop iterates over the enumerable **property keys** of an object. For an array, these are usually its index keys.
+
+```javascript
+let student = {
+    name: "Aman",
+    age: 20,
+    dept: "CSE"
+};
+
+for (let key in student) {
+    console.log(key, student[key]);
+}
+```
+
+**Output:**
+
+```text
+name Aman
+age 20
+dept CSE
+```
+
+**Difference:**
+
+- `for...of` gives the values of an iterable.
+- `for...in` gives property keys.
+- Use `for...of` for array values and `for...in` for object properties.
+
+## 9. Explain any five array methods in JavaScript.
+
+JavaScript provides built-in array methods to add, remove, and transform elements.
+
+### 1. `push()`
+
+Adds one or more elements to the end of an array.
+
+```javascript
+let arr = [10, 20];
+arr.push(30);
+
+console.log(arr);
+```
+
+**Output:** `[10, 20, 30]`
+
+### 2. `pop()`
+
+Removes the last element from an array and returns it.
+
+```javascript
+let arr = [10, 20, 30];
+arr.pop();
+
+console.log(arr);
+```
+
+**Output:** `[10, 20]`
+
+### 3. `shift()`
+
+Removes the first element from an array and returns it.
+
+```javascript
+let arr = [10, 20, 30];
+arr.shift();
+
+console.log(arr);
+```
+
+**Output:** `[20, 30]`
+
+### 4. `unshift()`
+
+Adds one or more elements to the beginning of an array.
+
+```javascript
+let arr = [20, 30];
+arr.unshift(10);
+
+console.log(arr);
+```
+
+**Output:** `[10, 20, 30]`
+
+### 5. `map()`
+
+Creates a new array by applying a function to every element of the original array.
+
+```javascript
+let arr = [1, 2, 3];
+let result = arr.map(x => x * 2);
+
+console.log(result);
+```
+
+**Output:** `[2, 4, 6]`
+
+**Note:** `push()`, `pop()`, `shift()`, and `unshift()` modify the original array, whereas `map()` returns a new array.
+
+## 10. What is a callback function in JavaScript?
+
+A **callback function** is a function passed as an argument to another function so that it can be called at a specified point during execution. Callbacks are commonly used in event handling, asynchronous operations, and array methods.
+
+**Example:**
+
+```javascript
+function greet(name, callback) {
+    console.log("Hello " + name);
+    callback();
+}
+
+function message() {
+    console.log("Welcome to JavaScript");
+}
+
+greet("Aman", message);
+```
+
+**Output:**
+
+```text
+Hello Aman
+Welcome to JavaScript
+```
+
+**Explanation:**
+
+1. The `message` function is passed as an argument to `greet()`.
+2. The `greet()` function prints the greeting.
+3. It calls `callback()`, which executes `message()`.
+
+Therefore, a callback allows one function to execute another function when required.
